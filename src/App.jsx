@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import './css/App.css';
-import usefetch from './customhooks/usefetch';
+import useFetch from './customhooks/useFetch';
 const bgColor = [
   '#E7B10A',
   '#609966',
@@ -20,7 +20,7 @@ const bgColor = [
 function App() {
   const [color, setColor] = useState('#E7B10A');
   const [tweetUrl, setTweetUrl] = useState(null);
-  const { data, loading, fetchNewQuote } = usefetch(
+  const { data, loading, fetchNewQuote } = useFetch(
     'https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json'
   );
   const handleRandomColor = () => {
