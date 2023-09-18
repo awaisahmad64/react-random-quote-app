@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
+import data from './quote.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import './css/App.css';
-import usefetch from './customhooks/usefetch';
 const bgColor = [
   '#E7B10A',
   '#609966',
@@ -17,38 +17,39 @@ const bgColor = [
   '#006A71',
   '#A8DF65',
 ];
+console.log(data.quotes[1].quote);
+console.log(data.quotes.length)
 function App() {
   const [color, setColor] = useState('#E7B10A');
-  const [tweetUrl, setTweetUrl] = useState(null);
-  const { data, loading, fetchNewQuote } = usefetch(
-    'https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json'
-  );
-  const handleRandomColor = () => {
-    const randomColor = Math.floor(Math.random() * bgColor.length);
-    setColor(bgColor[randomColor]);
-    fetchNewQuote();
-  };
-  useEffect(() => {
-    if (!loading) {
-      const hashtags = 'quotes';
-      const tweetText = `"${data.quote}" ${data.author}`;
+  const random = Math.floor(Math.random() * data.quotes.length);
+  const hashtags = 'quotes';
+      const tweetText = `"${data.quotes[random].quote}" ${data.quotes[random].author}`;
       const relatedAccounts = 'freecodecamp';
-      const url = `https://twitter.com/intent/tweet?hashtags=${hashtags}&related=${relatedAccounts}&text=${encodeURIComponent(
+      const tweetUrl = `https://twitter.com/intent/tweet?hashtags=${hashtags}&related=${relatedAccounts}&text=${encodeURIComponent(
         tweetText
       )}`;
-      setTweetUrl(url);
+    
+  const handleRandomColor = () => {
+    const randomColor = Math.floor(Math.random() * bgColor.length);
+    
+    setColor(bgColor[randomColor]);
+  };
+  useEffect(() => {
+  
+      
+     
     }
-  }, [data]);
+  ,[]);
   return (
     <>
       <div id="wrapper" style={{ backgroundColor: color }}>
         <div id="quote-box">
           <div id="text" style={{ color: color }}>
             <FontAwesomeIcon id="fa-ml" icon={faQuoteLeft} />
-            {loading ? 'Loading...' : data.quote}
+            { data.quotes[random].quote}
           </div>
           <p id="author" style={{ color: color }}>
-            - {loading ? 'Loading...' : data.author}
+            - {data.quotes[random].author}
           </p>
           <div id="new_quote_btn_row">
             <a
@@ -64,7 +65,7 @@ function App() {
               id="new-quote"
               style={{ backgroundColor: color }}
               onClick={handleRandomColor}
-              disabled={loading}
+              
             >
               New Quote
             </span>
